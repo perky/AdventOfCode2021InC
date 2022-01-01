@@ -2,5 +2,8 @@
 *.pdb
 *.obj
 *.suo
+*.dSYM
 .vs
 .vs/*
+aoc
+main
