@@ -140,7 +140,7 @@ void day7()
                                     crabs, 
                                     crabs_count,
                                     DAY7_USE_TRIANGULAR_NUMBERS);
-        println("(%s) Most efficient position is %u using %I64u fuel.",
+        println("(%s) Most efficient position is %u using "U64FMT" fuel.",
                 method_title,
                 result.position,
                 result.fuel_cost);

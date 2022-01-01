@@ -66,7 +66,7 @@ void day6()
     }
     
     u64 total_fish_count = get_total_fish_count(fish_bins);
-    println("After %d days there are %I64u fishes.",
+    println("After %d days there are "U64FMT" fishes.",
             DAY6_DAYS_TO_ADVANCE,
             total_fish_count);
     assert_equal_i64(total_fish_count, 1710166656900, "Day 6");

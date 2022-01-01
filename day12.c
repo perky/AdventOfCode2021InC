@@ -31,10 +31,9 @@ struct cave_node cave_node_alloc(char *name)
     return node;
 }
 
-inline path_node_ptr 
-path_node_alloc(cave_node_ptr cave, 
-                path_node_ptr prev, 
-                bool visited_small_cave_twice)
+path_node_ptr path_node_alloc(cave_node_ptr cave, 
+                              path_node_ptr prev, 
+                              bool visited_small_cave_twice)
 {
     path_node_ptr node = mem_arena_get(&global_arena, sizeof(struct path_node));
     node->cave = cave;
@@ -44,7 +43,7 @@ path_node_alloc(cave_node_ptr cave,
 }
 
 // Stack helpers
-inline cave_node_ptr get_cave_node_ptr(struct cave_node *nodes, u64 idx)
+static cave_node_ptr get_cave_node_ptr(struct cave_node *nodes, u64 idx)
 {
     return &nodes[idx];
 }
@@ -66,7 +65,7 @@ bool read_day12_input(FILE *f, u64 *count, void *userdata)
 {
     struct cave_node *cave_nodes = userdata;
     char line[32];
-    i32 scan_count = fscanf(f, "%s", &line);
+    i32 scan_count = fscanf(f, "%s", line);
     if (scan_count == 1)
     {
         char *left_name = strtok(line, "-");

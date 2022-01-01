@@ -36,6 +36,10 @@ void queue_free(void *q)
     }
 }
 
+extern inline u64 queue_count(void *q);
+extern inline u64 queue_increment_back(void *q);
+extern inline u64 queue_increment_front(void *q);
+
 inline u64 queue_count(void *q)
 {
     struct queue_header *header = queue_header(q);
@@ -49,7 +53,7 @@ inline u64 queue_count(void *q)
     }
 }
 
-inline u64 _queue_increment_back(void *q)
+inline u64 queue_increment_back(void *q)
 {
     struct queue_header *header = queue_header(q);
     u64 old_back = header->back;
@@ -57,13 +61,13 @@ inline u64 _queue_increment_back(void *q)
     if (header->back == header->front)
     {
         println("ERROR: queue front == back.");
-        println("%I64u", header->front);
+        println(U64FMT, header->front);
         exit(0);
     }
     return old_back;
 }
 
-inline u64 _queue_increment_front(void *q)
+inline u64 queue_increment_front(void *q)
 {
     struct queue_header *header = queue_header(q);
     u64 old_front = header->front;
@@ -71,7 +75,7 @@ inline u64 _queue_increment_front(void *q)
     return old_front;
 }
 
-#define queue_push(q, v) ((q)[_queue_increment_back(q)] = v, (q))
-#define queue_pop(q) ((q)[_queue_increment_front(q)])
+#define queue_push(q, v) ((q)[queue_increment_back(q)] = v, (q))
+#define queue_pop(q) ((q)[queue_increment_front(q)])
 
 #endif //QUEUE_H

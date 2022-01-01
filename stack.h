@@ -48,7 +48,7 @@ void stack_clear(void *stack)
 u64 stack_count(void *stack)
 {
     struct stack_header *header = stack_header(stack);
-    if (header == NULL) exit(0);
+    if (header == NULL) exit(-1);
     return header->count;
 }
 
@@ -93,6 +93,33 @@ void* stack_maybe_grow(void *stack)
 stack_header(st)->count--,\
 (st)[stack_header(st)->count]\
 )
+
+#define stack_pop_index(st, i, tmp) (\
+(tmp) = (st)[i],\
+(st)[i] = stack_last(st),\
+stack_last(st) = (tmp),\
+stack_pop(st)\
+)
+
+void* stack_insert(void *stack, void *val, u64 idx)
+{
+    stack = stack_maybe_grow(stack);
+    struct stack_header *header = stack_header(stack);
+    header->count += 1;
+    memmove(header->data + (idx * header->elem_size),
+            header->data + ((idx - 1) * header->elem_size),
+            (header->count - idx) * header->elem_size);
+    memcpy(header->data + (idx * header->elem_size), 
+           val, 
+           header->elem_size);
+    return stack;
+}
+
+void stack_zero(void *stack)
+{
+    struct stack_header *header = stack_header(stack);
+    memset(stack, 0, header->capacity * header->elem_size);
+}
 
 void stack_test()
 {

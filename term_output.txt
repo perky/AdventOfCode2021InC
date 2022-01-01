@@ -1,0 +1,54 @@
+[./day1.c]  Count of three-group increases: 1627
+  ~~~~~ day1() took 0.3360 ms and allocated 0 bytes ~~~~~
+
+[./day2.c]  Horiztonal * Depth = 1568138742.
+  ~~~~~ day2() took 0.1950 ms and allocated 0 bytes ~~~~~
+
+[./day3.c]  Life support is 903810.
+  ~~~~~ day3() took 0.1110 ms and allocated 0 bytes ~~~~~
+
+[./day4.c]  BINGO! Board #44 is last to win, with draw 85, number 38.
+[./day4.c]  Final score is 7296.
+  ~~~~~ day4() took 0.5170 ms and allocated 39816 bytes ~~~~~
+
+[./day5.c]  # of overlapping cells is 20484.
+  ~~~~~ day5() took 1.4780 ms and allocated 980100 bytes ~~~~~
+
+[./day6.c]  After 256 days there are 1710166656900 fishes.
+  ~~~~~ day6() took 0.0860 ms and allocated 4000 bytes ~~~~~
+
+[./day7.c]  (Average method) Most efficient position is 490 using 95519693 fuel.
+  ~~~~~ day7() took 0.2390 ms and allocated 48000 bytes ~~~~~
+
+[./day8.c]  Final sum is 936117.
+  ~~~~~ day8() took 0.2610 ms and allocated 24576 bytes ~~~~~
+
+[./day9.c]  Risk level is 496.
+[./day9.c]  basin result = 902880.
+  ~~~~~ day9() took 2.0260 ms and allocated 90009 bytes ~~~~~
+
+[./day10.c]  Error score is 415953.
+[./day10.c]  Middle complete score is 2292863731.
+  ~~~~~ day10() took 1.2170 ms and allocated 530 bytes ~~~~~
+
+[./day11.c]  After 290 steps there were 4689 flashes and synchronicity.
+  ~~~~~ day11() took 0.3280 ms and allocated 1000 bytes ~~~~~
+
+[./day12.c]  Succesfully built cave graph.
+[./day12.c]  There are 93686 paths.
+  ~~~~~ day12() took 34.1950 ms and allocated 14986336 bytes ~~~~~
+
+..##.###..####..##..#..#..##..#..#.###..
+...#.#..#....#.#..#.#..#.#..#.#..#.#..#.
+...#.#..#...#..#....#..#.#..#.#..#.#..#.
+...#.###...#...#....#..#.####.#..#.###..
+#..#.#....#....#..#.#..#.#..#.#..#.#.#..
+.##..#....####..##...##..#..#..##..#..#.
+[./day13.c]  final count: 95.
+  ~~~~~ day13() took 0.9240 ms and allocated 11000 bytes ~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~ Advent of Code took 41.9130 ms ~~~~~
+~~~~~ Advent of Code gamermode: 23.9 FPS ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exited with code 0

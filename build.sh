@@ -1,0 +1,1 @@
+gcc -std=c99 -Wno-switch -O3 main.c -o aoc

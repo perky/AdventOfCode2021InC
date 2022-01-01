@@ -97,24 +97,25 @@ bool day10_read_input(FILE *f, u64 *count, void *userdata)
     i32 scan_count = fscanf(f, "%c", &c);
     if (scan_count > 0)
     {
+        char open_bracket = 0;
         switch(c)
         {
             case '[':
             case '(':
             case '{':
             case '<':
-            ctx->chunks = stack_push(ctx->chunks, c);
+            stack_push(ctx->chunks, c);
             break;
             
             case ']':
             case ')':
             case '}':
             case '>':
-            char open_bracket = stack_pop(ctx->chunks);
+            open_bracket = stack_pop(ctx->chunks);
             if (!does_bracket_pair_match(open_bracket, c))
             {
 #if DAY10_PRINT_PER_LINE
-                println("found corrupted chunk on line %I64u: %c%c.", 
+                println("found corrupted chunk on line "U64FMT": %c%c.", 
                         ctx->line_number + 1,
                         open_bracket, 
                         c);
@@ -151,14 +152,14 @@ void day10()
                                       day10_read_input);
     if (did_read)
     {
-        println("Error score is %I64u.", ctx.error_score);
+        println("Error score is "U64FMT".", ctx.error_score);
         u64 score_line_count = stack_count(ctx.complete_score_lines);
         qsort(ctx.complete_score_lines, 
               score_line_count, 
               sizeof(u64), 
               qsort_ascending_u64);
         u64 middle_complete_score = ctx.complete_score_lines[score_line_count/2];
-        println("Middle complete score is %I64u.", middle_complete_score);
+        println("Middle complete score is "U64FMT".", middle_complete_score);
         assert_equal_i64(middle_complete_score, 2292863731, "Day 10");
     }
     

@@ -138,7 +138,7 @@ void day9()
             i32 cell_i = low_points[low_point_i];
             risk_level += (heightmap.cells[cell_i] + 1);
         }
-        println("Risk level is %I64u.", risk_level);
+        println("Risk level is "U64FMT".", risk_level);
         
         i32 *basins = mem_arena_get(&global_arena, DAY9_MAX_INPUT_COUNT * sizeof(i32));
         u64 basin_count = 0;
@@ -156,7 +156,7 @@ void day9()
             result *= basins[i];
         }
         
-        println("basin result = %I64u.", result);
+        println("basin result = "U64FMT".", result);
         assert_equal_i64(result, 902880, "Day 9");
     }
 }

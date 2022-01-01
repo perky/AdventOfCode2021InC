@@ -58,7 +58,7 @@ void assert_equal_i64(i64 a, i64 b, char *prefix)
 {
     if (a != b)
     {
-        printf("%s; expected %I64i got %I64i.\n", 
+        printf("%s; expected "U64FMT" got "U64FMT".\n", 
                prefix, b, a);
         exit(0);
     }
@@ -67,7 +67,7 @@ void assert_equal_i64(i64 a, i64 b, char *prefix)
 struct map_u8
 {
     u8 *cells;
-    u64 count;
+    u64 capacity, count;
     struct vector_2d size;
 };
 
@@ -76,6 +76,7 @@ struct map_u8 map_u8_alloc(struct mem_arena *allocator, size_t count)
     u8 *cells = (u8*)mem_arena_get(allocator, count * sizeof(u8));
     struct map_u8 map;
     map.cells = cells;
+    map.capacity = count;
     map.count = 0;
     map.size.x = 0;
     map.size.y = 1;
@@ -90,7 +91,7 @@ void map_u8_print(struct map_u8 *map)
         {
             struct vector_2d cell = {x, y};
             u64 cell_i = vec_1D_from_2D(map->size, cell);
-            printf("%u", map->cells[cell_i]);
+            printf("%u", (u8)map->cells[cell_i]);
         }
         printf("\n");
     }
@@ -174,6 +175,45 @@ bool is_cell_valid(struct vector_2d cell, struct vector_2d map_size)
 bool is_lowercase(char c)
 {
     return (c >= 97) && (c <= 122);
+}
+
+bool find_value_in_array_u32(u32 *values, u64 count, u32 needle, u64 *out_i)
+{
+    for (u64 i = 0; i < count; i++)
+    {
+        if (values[i] == needle)
+        {
+            if (out_i != NULL)
+                *out_i = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+u32 find_lowest_in_array_u32(u32 *values, u64 count)
+{
+    u32 lowest = UINT32_MAX;
+    u32 lowest_i = 0;
+    for (u32 i = 0; i < count; i++)
+    {
+        if (values[i] < lowest)
+        {
+            lowest = values[i];
+            lowest_i = i;
+        }
+    }
+    return lowest_i;
+}
+
+void print_array_i32(i32 *data, size_t size, char* label)
+{
+    printf("%s: ", label);
+    for (u64 i = 0; i < size; i++)
+    {
+        printf("%d, ", data[i]);
+    }
+    printf("\n");
 }
 
 #endif //COMMON_H

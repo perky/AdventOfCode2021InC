@@ -79,7 +79,7 @@ void day11()
             
             if (is_syncronised)
             {
-                println("After %I64u steps there were %I64u flashes and synchronicity.", 
+                println("After "U64FMT" steps there were "U64FMT" flashes and synchronicity.", 
                         step, flash_count);
                 //map_u8_print(&octopus_map);
                 assert_equal_i64(step, 290, "Day 11");

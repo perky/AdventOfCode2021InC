@@ -3,6 +3,14 @@
 #ifndef MEMORY_ARENA_H
 #define MEMORY_ARENA_H
 
+#if defined(WIN32)
+#define ARENA_MALLOC(capacity) VirtualAlloc(0, capacity, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE)
+#define ARENA_FREE(ptr) VirtualFree(ptr, 0, MEM_RELEASE)
+#else
+#define ARENA_MALLOC(capacity) malloc(capacity)
+#define ARENA_FREE(ptr) free(ptr)
+#endif
+
 struct mem_arena
 {
     size_t capacity, used;
@@ -16,9 +24,14 @@ struct mem_arena mem_arena_alloc(size_t capacity)
     struct mem_arena arena;
     arena.capacity = capacity;
     arena.used = 0;
-    arena.data_start = VirtualAlloc(0, capacity, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    arena.data_start = ARENA_MALLOC(capacity);
     arena.data = arena.data_start;
     return arena;
+}
+
+void mem_arena_free(struct mem_arena *arena)
+{
+    ARENA_FREE(arena->data_start);
 }
 
 void* mem_arena_get(struct mem_arena *arena, size_t amount)
@@ -56,12 +69,6 @@ void mem_arena_reset(struct mem_arena *arena)
 {
     arena->data = arena->data_start;
     arena->used = 0;
-}
-
-void mem_arena_free(struct mem_arena *arena)
-{
-    VirtualFree(arena->data_start, 0, MEM_RELEASE);
-    //free(arena->data_start);
 }
 
 #endif //MEMORY_ARENA_H

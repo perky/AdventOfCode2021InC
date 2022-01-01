@@ -275,7 +275,7 @@ void day8()
                    digits[3]);
 #endif
         }
-        println("Final sum is %I64u.", final_sum);
+        println("Final sum is "U64FMT".", final_sum);
         assert_equal_i64(final_sum, 936117, "Day 8");
     }
 }

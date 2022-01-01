@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <windows.h>
 
 #include "memory_arena.h"
 #include "common.h"
@@ -20,66 +19,30 @@
 #include "day10.c"
 #include "day11.c"
 #include "day12.c"
+#include "day13.c"
+#include "day14.c"
+#include "day15.c"
+#include "day24.c"
 
-#define RUN_DAY(n) run_day("day"#n, day ## n)
-double run_day(char *chapter, void (*day)())
+#define RUN_ONLY_DAY 24
+
+#define RUN_DAY(n) run_day(n, "day"#n, day ## n)
+double run_day(u32 day_num, char *chapter, void (*day)())
 {
-    LARGE_INTEGER freq;
-    LARGE_INTEGER t1, t2;
-    QueryPerformanceFrequency(&freq);
-    QueryPerformanceCounter(&t1);
+    if (RUN_ONLY_DAY > 0 && day_num != RUN_ONLY_DAY)
+        return 0;
+    
+    TIME t1, t2;
+    GET_ACCURATE_TIME(&t1);
     day();
     size_t bytes_used = global_arena.used;
     mem_arena_reset(&global_arena);
-    QueryPerformanceCounter(&t2);
-    double elapsed = (t2.QuadPart - t1.QuadPart) * 1000.0 / freq.QuadPart;
+    GET_ACCURATE_TIME(&t2);
+    double elapsed = GET_ACCURATE_TIME_DIFFERENCE(t1, t2);
     printf("  ~~~~~ %s() took %.4f ms and allocated %zu bytes ~~~~~\n\n", chapter, elapsed, bytes_used);
     return elapsed;
 }
 
-typedef struct
-{
-    size_t count;
-    size_t capacity;
-    size_t elem_size;
-} arr_header;
-
-void* array_alloc(size_t capacity, size_t elem_size)
-{
-    void *data = malloc(sizeof(arr_header) + (capacity * elem_size));
-    arr_header *header = (arr_header*)data;
-    header->count = 0;
-    header->capacity = capacity;
-    header->elem_size = elem_size;
-    data = (char*)data + sizeof(arr_header);
-    return data;
-}
-
-arr_header* arrheader(void *data)
-{
-    return ((arr_header*)data - 1);
-}
-
-void arrput_i32(i32 *data, i32 val)
-{
-    arr_header *h = arrheader(data);
-    data[h->count++] = val;
-}
-
-void arrput(void *data, void *val)
-{
-    arr_header *h = arrheader(data);
-    memcpy((char*)data + (h->count * h->elem_size), val, h->elem_size);
-    h->count += 1;
-}
-
-size_t arrcount(void *data)
-{
-    arr_header *h = arrheader(data);
-    return h->count;
-}
-
-#include "stack.h"
 int main()
 {
     global_arena = mem_arena_alloc(MEGABYTE * 50);
@@ -99,6 +62,10 @@ int main()
         timer += RUN_DAY(10);
         timer += RUN_DAY(11);
         timer += RUN_DAY(12);
+        timer += RUN_DAY(13);
+        timer += RUN_DAY(14);
+        timer += RUN_DAY(15);
+        timer += RUN_DAY(24);
     }
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("~~~~~ Advent of Code took %.4f ms ~~~~~\n", timer);

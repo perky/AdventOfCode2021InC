@@ -35,7 +35,7 @@ void day1()
     if (did_read)
     {
         i64 increase_counter = day1_compute_increases(values);
-        println("Count of three-group increases: %I64i.", increase_counter);
+        println("Count of three-group increases: " U64FMT, increase_counter);
         assert_equal_i64((i64)increase_counter, 1627, "Day 1");
     }
 }
